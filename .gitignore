@@ -13,3 +13,4 @@ init.sql
 target/
 dbt_packages/
 logs/
+!lab_medallion/seeds/*.csv
