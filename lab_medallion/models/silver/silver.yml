@@ -7,6 +7,11 @@ models:
         data_tests:
           - unique
           - not_null
+      - name: username_normalized
+        description: Username without leading or trailing whitespace, in lowercase.
+        data_tests:
+          - unique
+          - not_null
       - name: email
         data_tests:
           - unique
@@ -16,10 +21,20 @@ models:
           - accepted_values:
               arguments:
                 values: ["F", "M"]
+      - name: birthdate
+        description: Birthdate of the user, NULL when it is later than the first order.
+      - name: birthdate_is_valid
+        description: False when the original birthdate is later than the first order of the user.
+        data_tests:
+          - not_null
       - name: state
         description: Two letters code of the state, territory or military region.
         data_tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('state_zip_prefixes')
+                field: state
 
   - name: stg_orders
     description: One row per order, typed and deduplicated.
@@ -37,6 +52,7 @@ models:
                 field: user_id
       - name: quantity
         data_tests:
+          - positive
           - accepted_values:
               arguments:
                 values: [1, 2, 3, 4, 5]
