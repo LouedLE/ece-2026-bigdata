@@ -10,3 +10,6 @@ policy.json
 delete.json
 *.duckdb*
 init.sql
+target/
+dbt_packages/
+logs/
