@@ -14,3 +14,5 @@ target/
 dbt_packages/
 logs/
 !lab_medallion/seeds/*.csv
+labs/**/*.log
+warehouse/**/data/
