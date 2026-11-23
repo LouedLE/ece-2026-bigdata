@@ -1,0 +1,55 @@
+
+===== Exercise 1: birthdate_is_valid, DataFrame API =====
++------------------+-----+
+|birthdate_is_valid|count|
++------------------+-----+
+|             false|    5|
+|              true|   45|
++------------------+-----+
+
+
+===== Exercise 1: birthdate_is_valid, Spark SQL =====
+rows that differ between DataFrame and SQL: 0
+invalid birthdates: 5
+
+===== Exercise 2: zip_code with regexp_extract, Python UDF and pandas_udf =====
+regexp_extract     212.5 ms per run
+python udf         208.1 ms per run
+pandas_udf         214.9 ms per run
+
+===== Exercise 3: cache the bronze DataFrames =====
+first action (reads S3, fills the cache): 1596 ms
+second action (served from memory): 492 ms
+storage level: Disk Memory Deserialized 1x Replicated
+== Physical Plan ==
+AdaptiveSparkPlan isFinalPlan=false
++- HashAggregate(keys=[product#328], functions=[count(1)])
+   +- Exchange hashpartitioning(product#328, 200), ENSURE_REQUIREMENTS, [plan_id=1684]
+      +- HashAggregate(keys=[product#328], functions=[partial_count(1)])
+         +- InMemoryTableScan [product#328]
+               +- InMemoryRelation [uuid#324, user_uuid#325, date#326, quantity#327, product#328], StorageLevel(disk, memory, deserialized, 1 replicas)
+                     +- FileScan csv [uuid#324,user_uuid#325,date#326,quantity#327,product#328] Batched: false, DataFilters: [], Format: CSV, Location: InMemoryFileIndex(1 paths)[s3a://user-l-lebeldepenguilly-ece/bronze/orders.csv], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<uuid:string,user_uuid:string,date:timestamp,quantity:int,product:string>
+
+
+
+===== Exercise 4: append and time travel =====
++-------------------+---------+-----------------------+
+|snapshot_id        |operation|committed_at           |
++-------------------+---------+-----------------------+
+|6603628024410231712|overwrite|2026-11-23 16:56:00.754|
+|4330986847496337037|append   |2026-11-23 16:59:07.013|
++-------------------+---------+-----------------------+
+
++-------------+
+|orders_before|
++-------------+
+|         2829|
++-------------+
+
++----------+
+|orders_now|
++----------+
+|      2830|
++----------+
+
+parquet directory now: 2830 rows, no older version to read
