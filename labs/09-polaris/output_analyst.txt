@@ -1,0 +1,29 @@
+Polaris principal: analyst
+fs.s3.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
+
+===== Read as the analyst =====
++---------+---------+-----------+
+|namespace|tableName|isTemporary|
++---------+---------+-----------+
+|silver   |users    |false      |
+|silver   |orders   |false      |
++---------+---------+-----------+
+
+SHOW TABLES IN silver: allowed
++---------+------+
+|  product|orders|
++---------+------+
+|    bread|   458|
+|  brioche|   468|
+|   cookie|   467|
+|croissant|   491|
+|    donut|   462|
+|    drink|   484|
++---------+------+
+
+
+===== Write as the analyst =====
+11:06:40.252 [Thread-5] ERROR org.apache.spark.sql.execution.datasources.v2.AppendDataExec - Data source write support IcebergBatchWrite(table=polaris.silver.orders, format=PARQUET) is aborting.
+11:06:40.381 [Thread-5] ERROR org.apache.spark.sql.execution.datasources.v2.AppendDataExec - Data source write support IcebergBatchWrite(table=polaris.silver.orders, format=PARQUET) aborted.
+INSERT INTO silver.orders: denied -> : org.apache.iceberg.exceptions.ForbiddenException: Forbidden: Principal 'analyst' with activated PrincipalRoles '[data_analyst]' and activated grants via '[data_analyst, catalog_reader]' is not authorized for op ADD_TABLE_SNAPSHOT
+ALTER TABLE silver.users ADD COLUMN phone: denied -> : org.apache.iceberg.exceptions.ForbiddenException: Forbidden: Principal 'analyst' with activated PrincipalRoles '[data_analyst]' and activated grants via '[data_analyst, catalog_reader]' is not authorized for op ADD_TABLE_SCHEMA

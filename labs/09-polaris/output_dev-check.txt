@@ -1,0 +1,67 @@
+Polaris principal: dev
+fs.s3.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
+
+===== Snapshots of silver.orders after the analyst writes =====
++-------------------+---------+-----------------------+
+|snapshot_id        |operation|committed_at           |
++-------------------+---------+-----------------------+
+|6603628024410231712|overwrite|2026-11-23 16:56:00.754|
+|4330986847496337037|append   |2026-11-23 16:59:07.013|
++-------------------+---------+-----------------------+
+
++------+
+|orders|
++------+
+|  2830|
++------+
+
+
+===== Exercise 1: drop the country column =====
++-------------------+---------+
+|snapshot_id        |operation|
++-------------------+---------+
+|5817106931153837914|overwrite|
++-------------------+---------+
+
++---------+---------+-------+
+| col_name|data_type|comment|
++---------+---------+-------+
+|  user_id|   string|   NULL|
+| username|   string|   NULL|
+|     name|   string|   NULL|
+|      sex|   string|   NULL|
+|    email|   string|   NULL|
+|birthdate|     date|   NULL|
+|   street|   string|   NULL|
+|     city|   string|   NULL|
+|    state|   string|   NULL|
+| zip_code|   string|   NULL|
++---------+---------+-------+
+
++-------------------+---------+
+|snapshot_id        |operation|
++-------------------+---------+
+|5817106931153837914|overwrite|
++-------------------+---------+
+
++-------------------------------------------------------------------------------------------------------------------------+----------------+
+|file                                                                                                                     |latest_schema_id|
++-------------------------------------------------------------------------------------------------------------------------+----------------+
+|s3://user-l-lebeldepenguilly-ece/warehouse/silver/users/metadata/00000-aa85fe67-38fd-4044-9346-cc7247407ec5.metadata.json|0               |
+|s3://user-l-lebeldepenguilly-ece/warehouse/silver/users/metadata/00001-6818547c-09b7-4ef8-8f46-ea62ddae3241.metadata.json|0               |
+|s3://user-l-lebeldepenguilly-ece/warehouse/silver/users/metadata/00002-2e5b04e3-dea2-401f-95b7-5898c2df94a8.metadata.json|0               |
++-------------------------------------------------------------------------------------------------------------------------+----------------+
+
+
+===== Exercise 2: gold namespace as dev =====
++---------+------+--------+
+|  product|orders|quantity|
++---------+------+--------+
+|    bread|   458|    1420|
+|  brioche|   468|    1424|
+|   cookie|   467|    1367|
+|croissant|   491|    1523|
+|    donut|   462|    1390|
+|    drink|   484|    1493|
++---------+------+--------+
+

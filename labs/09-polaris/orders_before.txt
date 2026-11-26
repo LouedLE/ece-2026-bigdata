@@ -1,0 +1,9 @@
+warehouse/silver/orders/data/00000-63-319c0c5f-d1a3-4fce-a364-ff3ba310366d-0-00001.parquet
+warehouse/silver/orders/data/00000-71-782f3f05-66da-4f6e-966a-fc60a7cdc6a1-0-00001.parquet
+warehouse/silver/orders/metadata/3cc7b8d3-587a-4a20-8f3e-3973f604f94b-m0.avro
+warehouse/silver/orders/metadata/745cf2be-077e-4a3e-9e78-d96d31808f78-m0.avro
+warehouse/silver/orders/metadata/snap-4330986847496337037-1-745cf2be-077e-4a3e-9e78-d96d31808f78.avro
+warehouse/silver/orders/metadata/snap-6603628024410231712-1-3cc7b8d3-587a-4a20-8f3e-3973f604f94b.avro
+warehouse/silver/orders/metadata/v1.metadata.json
+warehouse/silver/orders/metadata/v2.metadata.json
+warehouse/silver/orders/metadata/version-hint.text

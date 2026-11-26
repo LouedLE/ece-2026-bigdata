@@ -1,0 +1,146 @@
+bucket and catalog: user-l-lebeldepenguilly-ece
+
+===== bronze layer =====
+2026-09-28 10:49:50     331568 orders.csv
+2026-09-28 10:49:44       7351 users.csv
+
+===== chart files =====
+polaris/deployment/Chart.lock
+polaris/deployment/charts/polaris-1.8.0.tgz
+polaris/deployment/charts/postgresql-18.12.15.tgz
+polaris/deployment/Chart.yaml
+polaris/deployment/templates/bootstrap-job.yaml
+polaris/deployment/templates/polaris-db-secret.yaml
+polaris/deployment/values.yaml
+
+===== configmap and secrets =====
+configmap/polaris-config unchanged
+secret/polaris-credential unchanged
+secret/polaris-s3 unchanged
+
+===== helm =====
+"polaris" already exists with the same configuration, skipping
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "polaris" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "polaris" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Saving 2 charts
+Downloading polaris from repo https://downloads.apache.org/polaris/helm-chart
+Downloading postgresql from repo oci://registry-1.docker.io/bitnamicharts
+Pulled: registry-1.docker.io/bitnamicharts/postgresql:18.12.15
+Digest: sha256:8ab742fa91169b2c317a0ffa061d279d4964a45850408a319c764b3798242ba2
+Deleting outdated charts
+Release "polaris" does not exist. Installing it now.
+NAME: polaris
+LAST DEPLOYED: Thu Nov 26 11:01:11 2026
+NAMESPACE: user-l-lebeldepenguilly-ece
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+helm exit code: 0
+NAME                           READY   STATUS      RESTARTS      AGE
+pod/polaris-69c747bf54-qdg5r   1/1     Running     0             2m20s
+pod/polaris-bootstrap-qtbrq    0/1     Completed   0             34s
+pod/polaris-postgresql-0       1/1     Running     0             2m20s
+pod/vscode-pyspark-184469-0    1/1     Running     3 (10h ago)   2d2h
+
+NAME                          STATUS     COMPLETIONS   DURATION   AGE
+job.batch/polaris-bootstrap   Complete   1/1           33s        34s
+
+===== health =====
+{
+  "status": "UP",
+  "checks": [
+    {
+      "name": "MongoDB connection health check",
+      "status": "UP"
+    },
+    {
+      "name": "Database connections health check",
+      "status": "UP"
+    }
+  ]
+}
+
+===== bootstrap job (without credentials) =====
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+(1/11) Installing brotli-libs (1.1.1-r0)
+(2/11) Installing c-ares (1.34.9-r0)
+(3/11) Installing libunistring (1.2-r0)
+(4/11) Installing libidn2 (2.3.7-r0)
+(5/11) Installing nghttp2-libs (1.69.0-r0)
+(6/11) Installing libpsl (0.21.5-r3)
+(7/11) Installing zstd-libs (1.6.0-r1)
+(8/11) Installing libcurl (8.14.1-r3)
+(9/11) Installing curl (8.14.1-r3)
+(10/11) Installing oniguruma (6.9.9-r0)
+(11/11) Installing jq (1.8.2-r0)
+Executing busybox-1.37.0-r14.trigger
+OK: 12 MiB in 26 packages
+Waiting for Polaris...
+Polaris is ready.
+Realm: POLARIS
+Catalog: user-l-lebeldepenguilly-ece
+Obtaining administrative access token...
+Creating principal 'dev'...
+Principal 'dev' created.
+Creating principal 'analyst'...
+Principal 'analyst' created.
+Creating principal role 'data_engineer'...
+Principal role 'data_engineer' created.
+Creating principal role 'data_analyst'...
+Principal role 'data_analyst' created.
+Creating catalog 'user-l-lebeldepenguilly-ece'...
+Catalog 'user-l-lebeldepenguilly-ece' created.
+Creating catalog role 'catalog_contributor'...
+Catalog role 'catalog_contributor' created.
+Creating catalog role 'catalog_reader'...
+Catalog role 'catalog_reader' created.
+Granting CATALOG_MANAGE_ACCESS to 'catalog_contributor'...
+Granted CATALOG_MANAGE_ACCESS to 'catalog_contributor'.
+Granting CATALOG_MANAGE_METADATA to 'catalog_contributor'...
+Granted CATALOG_MANAGE_METADATA to 'catalog_contributor'.
+Granting CATALOG_MANAGE_CONTENT to 'catalog_contributor'...
+Granted CATALOG_MANAGE_CONTENT to 'catalog_contributor'.
+Granting TABLE_READ_DATA to 'catalog_reader'...
+Granted TABLE_READ_DATA to 'catalog_reader'.
+Granting TABLE_READ_PROPERTIES to 'catalog_reader'...
+Granted TABLE_READ_PROPERTIES to 'catalog_reader'.
+Granting CATALOG_READ_PROPERTIES to 'catalog_reader'...
+Granted CATALOG_READ_PROPERTIES to 'catalog_reader'.
+Assigning 'data_engineer' to 'dev'...
+Assigned 'data_engineer' to 'dev'.
+Assigning 'data_analyst' to 'analyst'...
+Assigned 'data_analyst' to 'analyst'.
+Assigning 'catalog_contributor' to 'data_engineer'...
+Assigned 'catalog_contributor' to 'data_engineer'.
+Assigning 'catalog_reader' to 'data_analyst'...
+Assigned 'catalog_reader' to 'data_analyst'.
+========================================
+Polaris RBAC bootstrap completed.
+Catalog: user-l-lebeldepenguilly-ece
+dev      -> data_engineer -> catalog_contributor
+analyst  -> data_analyst -> catalog_reader
+========================================
+
+===== principal credentials =====
+POLARIS_DEV_CREDENTIAL
+POLARIS_ANALYST_CREDENTIAL
+
+===== advanced: entities created by the bootstrap job =====
+catalogs:
+{"name":"user-l-lebeldepenguilly-ece","type":"INTERNAL","location":"s3://user-l-lebeldepenguilly-ece/warehouse/"}
+principals:
+["analyst","root","dev"]
+principal roles:
+["data_engineer","data_analyst","service_admin"]
+catalog roles:
+["catalog_contributor","catalog_reader","catalog_admin"]
+grants of catalog_contributor:
+["CATALOG_MANAGE_ACCESS","CATALOG_MANAGE_METADATA","CATALOG_MANAGE_CONTENT"]
+grants of catalog_reader:
+["TABLE_READ_DATA","TABLE_READ_PROPERTIES","CATALOG_READ_PROPERTIES"]
+DONE

@@ -16,3 +16,4 @@ logs/
 !lab_medallion/seeds/*.csv
 labs/**/*.log
 warehouse/**/data/
+polaris/deployment/charts/

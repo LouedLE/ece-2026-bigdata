@@ -1,0 +1,22 @@
+Polaris principal: dev
+fs.s3.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
+
+===== Cleanup =====
++---------+
+|namespace|
++---------+
+|   silver|
++---------+
+
++---------+---------+-----------+
+|namespace|tableName|isTemporary|
++---------+---------+-----------+
+|   silver|   orders|      false|
++---------+---------+-----------+
+
++------+
+|orders|
++------+
+|  2830|
++------+
+
